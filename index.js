@@ -6,7 +6,9 @@ dotenv.config()
 const app = express()
 
 app.get('/',(req,res)=>{
-    console.log('Hi there!')
+    res.status(200).json({
+        msg: "Working"
+    })
 })
 
 app.listen(process.env.PORT,()=>{
