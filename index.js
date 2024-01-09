@@ -7,7 +7,7 @@ const cookieParser = require('cookie-parser')
 
 const connectDB =async()=>{
     try{
-        await mongoose.connect(process.env.MONGO_URL)
+        await mongoose.connect(process.env.MONGO_URL,{dbName:'test'})
         console.log("database is connected successfully!")
     }
     catch(err){
