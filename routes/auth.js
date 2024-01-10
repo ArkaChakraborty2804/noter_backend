@@ -4,6 +4,14 @@ const User = require('../models/User')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 
+router.get("/", async(req,res)=> {
+    res.setHeader('Access-Control-Allow-Origin', '*')  ;
+    res.setHeader('Access-Controller-Allow-Methods','GET,POST,OPTIONS,PUT,PATCH,DELETE'); 
+    res.setHeader('Access-Controller-Allow-Headers','X-Requested-With,content-type');  
+    res.setHeader('Access-Control-Allow-Credentials', true) ;    
+    res.send("Hello World ");
+});
+
 //REGISTER
 router.post('/signup', async(req,res)=>{
     try{
