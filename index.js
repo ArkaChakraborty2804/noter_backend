@@ -68,6 +68,7 @@ app.post('/login',async(req,res)=>{
         // console.log(user.tree.password)
         // if(user.password === req.body.password){
             const token = jwt.sign({_id:user._id,username:user.username,email:user.email},process.env.SECRET,{expiresIn:'3d'})
+            console.log(token)
             // console.log(token)
             return res.cookie('token',token).status(200).json({msg:"logged in"})
         // }
