@@ -81,6 +81,7 @@ app.post('/signup', async(req,res)=>{
 
 app.post("/login",async (req,res)=>{
     try{
+        res.header('Access-Control-Expose-Headers', "Set-Cookie");
         const user=await User.findOne({email:req.body.email})
        
         if(!user){
