@@ -30,7 +30,7 @@ app.use(cors({origin:'*' ,
 app.use(express.json());
 
 app.get("/", async(req,res)=> {
-    res.setHeader('Access-Control-Allow-Origin', '*')  ;
+    res.setHeader('Access-Control-Allow-Origin', 'https://noter-frontend.vercel.app')  ;
     res.setHeader('Access-Controller-Allow-Methods','GET,POST,OPTIONS,PUT,PATCH,DELETE'); 
     res.setHeader('Access-Controller-Allow-Headers','X-Requested-With,content-type');  
     res.setHeader('Access-Control-Allow-Credentials', true) ;    
@@ -94,6 +94,7 @@ app.post("/login",async (req,res)=>{
         }
         const token=jwt.sign({_id:user._id,username:user.username,email:user.email},process.env.SECRET,{expiresIn:"3d"})
         const {password,...info}=user._doc
+        info.token = token
         res.cookie("token",token).status(200).json(info)
 
     }
