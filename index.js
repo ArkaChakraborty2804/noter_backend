@@ -19,9 +19,13 @@ const connectDB =async()=>{
 
 dotenv.config()
 app.use(express.json())
-app.use(cors({origin:'https://noter-frontend.vercel.app/',credentials:true}))
 app.use(cookieParser())
 app.use("/api/auth",authRoute)
+app.use(cors({origin:'*' ,
+ methods: "GET,HEAD,PUT,PATCH,POST,DELETE", 
+ preflightContinue: false , 
+ optionsSuccessStatus: 204}));
+app.use(express.json());
 
 app.listen(process.env.PORT,()=>{
     connectDB()
