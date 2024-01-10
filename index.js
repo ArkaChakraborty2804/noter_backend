@@ -41,9 +41,9 @@ app.get("/", async(req,res)=> {
 app.post('/signup', async(req,res)=>{
     try{
         const {username, email, password} = req.body
-        const salt = await bcrypt.genSalt(10)
-        const hashedPassword = await bcrypt.hash(password,salt)
-        const newUser = new User({username, email, password:hashedPassword})
+        // const salt = await bcrypt.genSalt(10)
+        // const hashedPassword = await bcrypt.hash(password,salt)
+        const newUser = new User({username, email, password})
         const savedUser = await newUser.save()
         res.status(200).json(savedUser)
     }
@@ -56,16 +56,22 @@ app.post('/signup', async(req,res)=>{
 //LOGIN
 app.post('/login',async(req,res)=>{
     try {
-        const user = User.findOne({email:req.body.email})
+        const user = await User.findOne({ email: req.body.email, password: req.body.password });
+        // console.log(user)
         if(!user){
-            return res.status(404).json({msg:"User not found"})
+            return res.status(404).json({msg:"Incorrect credentials"})
         }
-        const match = await bcrypt.compare(req.body.password, user.password)
-        if(!match){
-            return res.status(401).json({msg:"Password does not match"})
-        }
-        const token = jwt.sign({_id:user._id,username:user.username,email:user.email},process.env.SECRET,{expiresIn:'3d'})
-        res.cookie('token',token).status(200).json({msg:"logged in"})
+        // const match = await bcrypt.compare(req.body.password, password)
+        // console.log(match)
+        // console.log(user.password)
+        // console.log(user)
+        // console.log(user.tree.password)
+        // if(user.password === req.body.password){
+            const token = jwt.sign({_id:user._id,username:user.username,email:user.email},process.env.SECRET,{expiresIn:'3d'})
+            // console.log(token)
+            return res.cookie('token',token).status(200).json({msg:"logged in"})
+        // }
+        // return res.status(401).json({msg:"Password does not match"})
     } catch(err) {
         console.error(err)
         res.status(500).json(err)
