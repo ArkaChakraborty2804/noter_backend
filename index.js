@@ -3,7 +3,9 @@ const dotenv = require('dotenv')
 const app = express()
 const cors = require('cors')
 const mongoose=require('mongoose')
-const authRoute = require('./routes/auth')
+const User = require('../models/User')
+const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
 const cookieParser = require('cookie-parser')
 
 const connectDB =async()=>{
